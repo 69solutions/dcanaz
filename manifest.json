@@ -1,0 +1,104 @@
+{
+  "name": "DCanaZ",
+  "short_name": "DCanaZ",
+  "description": "Professional shopping experience with fast checkout and exclusive deals",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#073042",
+  "background_color": "#ffffff",
+  "scope": "/",
+  "lang": "en",
+  "categories": ["shopping", "business"],
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.freepik.com/512/8170/8170733.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "https://cdn-icons-png.freepik.com/512/8170/8170733.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "https://cdn-icons-png.freepik.com/512/8170/8170733.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "https://cdn-icons-png.freepik.com/512/8170/8170733.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "https://cdn-icons-png.freepik.com/512/8170/8170733.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "https://cdn-icons-png.freepik.com/512/8170/8170733.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "https://cdn-icons-png.freepik.com/512/8170/8170733.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "https://cdn-icons-png.freepik.com/512/8170/8170733.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Search Products",
+      "short_name": "Search",
+      "description": "Search for products",
+      "url": "/search",
+      "icons": [
+        {
+          "src": "https://cdn-icons-png.freepik.com/512/8170/8170733.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "View Cart",
+      "short_name": "Cart",
+      "description": "View shopping cart",
+      "url": "/cart",
+      "icons": [
+        {
+          "src": "https://cdn-icons-png.freepik.com/512/8170/8170733.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Track Orders",
+      "short_name": "Orders",
+      "description": "Track your orders",
+      "url": "/orders",
+      "icons": [
+        {
+          "src": "https://cdn-icons-png.freepik.com/512/8170/8170733.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}

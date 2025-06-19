@@ -1,0 +1,127 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="loader.css">
+<link rel="stylesheet" href="style.css">
+<div id="loader" style="display:none;"><div class="loader"></div></div>
+<style>
+  #userForm > h2 {
+    text-transform: uppercase;
+  }
+  #userForm > span {
+    font-size: 18px;
+    font-weight: 400;
+  }
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .dont > span {
+    font-size: 17px;
+  }
+  .dont > span > a {
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #073042;
+  }
+  @media only screen and (max-width: 600px){
+    .header{
+      background: #073042;
+    }
+    #userForm {
+      border-radius: 25px;
+      margin: -30px 0 0 0;
+      background: #fff;
+      padding: 30px 20px 20px 20px;
+    }
+  }
+  @media only screen and (min-width: 600px){
+    body {
+      padding: 10px 25%;
+      background: #073042;
+    }
+    .header > img {
+      padding: 10px 0 35px 0;
+    }
+    #userForm { 
+      background: #fff;
+      padding: 18px 25px 15px 25px;
+      border-radius: 25px;
+    }
+    #loader {
+      width: 50%;
+    }
+  }
+</style>
+<div class="header">
+  <img src="https://i.ibb.co/zcJvHMt/signup.webp">
+</div>
+<form id="userForm">
+  <h2>Signup</h2>
+  <span>for discover the marketplace.</span>
+  <input type="text" id="name" placeholder="Name" required class="int">
+  <input type="number" id="phone" placeholder="Phone Number" required class="int">
+  <input type="email" id="email" placeholder="Email" required class="int">
+  <input type="text" id="address" placeholder="Address" required class="int">
+  <input type="password" id="password" placeholder="Password" required class="int">
+  <button type="submit" class="btn">Signup</button>
+  <div class="dont">
+    <span>Already have account? <a href="login">Login</a></span>
+  </div>
+</form>
+
+<p id="response"></p>
+
+<script>
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbyLggNDrLHdSh0Y39-pDrPiuXGaJJtB4EsU4-IJ9hB8egFtUjs_0IW9KlGvzX7IUR_zUw/exec';
+
+  if (localStorage.getItem("e_local")) {
+    window.location.href = "index";
+  }
+
+  function generateRandomString(length) {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    let result = "";
+    for (let i = 0; i < length; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
+  }
+
+  document.getElementById("userForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+    document.getElementById("loader").style.display = "flex";
+
+    const name = document.getElementById("name").value;
+    const phone = document.getElementById("phone").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const address = document.getElementById("address").value;
+    const unique = generateRandomString(12);
+
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("phone", phone);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("address", address);
+    formData.append("unique", unique);
+
+    try {
+      const response = await fetch(scriptURL, { method: "POST", body: formData });
+      const result = await response.text();
+
+      document.getElementById("loader").style.display = "none";
+
+      if (result === "Exists") {
+        alert("Phone or Email already exists!");
+      } else {
+        localStorage.setItem("e_local", unique);
+        window.location.href = "index";
+      }
+    } catch (error) {
+      document.getElementById("loader").style.display = "none";
+      document.getElementById("response").textContent = "Submission failed.";
+    }
+  });
+</script>

@@ -1,0 +1,736 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#073042">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Shop App">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192x192.png">
+<link rel="stylesheet" href="loader.css">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+  #loader {
+    display: flex; position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%; background: #fff; z-index: 9999;
+  }
+  .card-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px 10px;
+    padding: 10px 20px;
+  }
+  .shop-info {
+    cursor: pointer;
+  }
+.card {
+  width: calc(50% - 5px);
+  cursor: pointer;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  font-family: sans-serif;
+  background: #eee;
+  position: relative;
+}
+
+.card img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  display: block;
+}
+
+.card h4 {
+  font-size: 14px;
+  margin: 8px;
+  line-height: 1.2;
+}
+
+.card p {
+  font-size: 12px;
+  margin: 4px 8px;
+}
+
+.btn-group {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+}
+
+.btn {
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn.like {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  color: #db1537;
+}
+
+.install-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(135deg, #073042, #0a4a5c);
+  color: white;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 10000;
+  transform: translateY(-100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.install-popup.show {
+  transform: translateY(0);
+}
+
+.install-popup-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.install-popup-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.install-popup-text {
+  flex: 1;
+}
+
+.install-popup-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.install-popup-subtitle {
+  font-size: 12px;
+  margin: 2px 0 0 0;
+  opacity: 0.8;
+  line-height: 1.2;
+}
+
+.install-popup-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.install-btn {
+  background: #008000;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.install-btn:hover {
+  background: #006600;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.close-btn:hover {
+  opacity: 1;
+}
+
+.main-content {
+  transition: margin-top 0.3s ease-in-out;
+}
+
+.main-content.with-popup {
+  margin-top: 76px;
+}
+
+@media only screen and (min-width: 600px){
+  #reviewSection , #addressFooter { display: none; }
+  .card {
+    width: calc(15% - 5px);
+  }
+  .whatsapp {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    bottom: 5%;
+    width: 50px;
+    height: 50px;
+    font-size: 22px;
+    color: #fff;
+    right: 30px;
+    background: #008000;
+    border-radius: 125px;
+    z-index: 999;
+  }
+  .card-row {
+    gap: 20px;
+  }
+  .cart {
+    padding: 12px;
+    width: 50%;
+    font-size: 12px;
+  }
+  .discount {
+    background: #008000;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    width: 50%;
+    border-radius: 125px;
+  }
+  .btn-group {
+    padding: 2px;
+  }
+  .card p {
+    font-size: 14px;
+  }
+  .card h4 {
+    font-size: 16px;
+  }
+  .dis-cart {
+    margin: 0 0 0 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row-reverse;
+  }
+  .category-title {
+    margin: 0 20px;
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .headmaster {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 30px 10px 15px;
+    margin: 0 0 20px 0;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }
+  .shop-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .shop-info > h2 {
+    font-family: "Bangers", system-ui;
+    font-weight: 300;
+    font-size: 26px;
+    letter-spacing: 1.5px;
+  }
+  .shop-info > img {
+    width: 40px;
+    height: 40px;
+  }
+  .search {
+    display: none;
+  }
+  .desk-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+  }
+  .desk-links > a {
+    font-size: 18px;
+    color: #073042;
+  }
+}
+@media only screen and (max-width: 600px){
+  .cart {
+    padding: 12px;
+    width: 50%;
+    font-size: 12px;
+  }
+  .discount {
+    background: #008000;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    width: 50%;
+    border-radius: 125px;
+  }
+  .dis-cart {
+    margin: 0 0 0 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row-reverse;
+  }
+  .btn-group {
+    padding: 2px;
+  }
+  .category-title {
+    margin: 0 15px;
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .whatsapp {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    bottom: 12%;
+    width: 50px;
+    height: 50px;
+    font-size: 22px;
+    color: #fff;
+    right: 20px;
+    background: #008000;
+    border-radius: 125px;
+    z-index: 999;
+  }
+  .headmaster {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 30px 10px 15px;
+    margin: 0 0 20px 0;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }
+  .shop-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .shop-info > h2 {
+    font-family: "Bangers", system-ui;
+    font-weight: 300;
+    font-size: 26px;
+    letter-spacing: 1.5px;
+  }
+  .shop-info > img {
+    width: 40px;
+    height: 40px;
+  }
+  .desk-links {
+    display: none;
+  }
+  .review-card {
+    margin: 10px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .review-card > h4 {
+    font-size: 22px;
+  }
+  .review-card > div {
+    font-size: 22px;
+    color: #ffd700;
+  }
+  .review-nav > button {
+    width: 30px;
+    height: 30px;
+    border-radius: 125px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #008000;
+    color: #FFF;
+  }
+  .review-nav > button:disabled {
+    background-color: #808080;
+    color: #FFF;
+    border-color: light-dark(rgba(118, 118, 118, 0.3), rgba(195, 195, 195, 0.3));
+  }
+  .review-card > p {
+    font-size: 20px;
+  }
+  .review-nav {
+    display: flex;
+    gap: 10px;
+    margin: 10px 15px;
+  }
+  .search {
+    font-size: 18px;
+    color: #073042;
+  }
+  #reviewSection {
+    padding: 30px 10px 10px 10px;
+    background: #073042;
+    border: none;
+    color: #fff;
+    margin: 30px 0 0 0;
+  }
+  #addressFooter {
+    padding: 20px 20px 20% 20px;
+    color: #fff;
+    background: #073042;
+  }
+}
+</style>
+
+<div id="installPopup" class="install-popup">
+  <div class="install-popup-content">
+    <div class="install-popup-icon">
+      <i class="fas fa-mobile-alt"></i>
+    </div>
+    <div class="install-popup-text">
+      <h3 class="install-popup-title">Install App</h3>
+      <p class="install-popup-subtitle">Get faster access and better experience</p>
+    </div>
+  </div>
+  <div class="install-popup-buttons">
+    <button id="installBtn" class="install-btn">Install</button>
+    <button id="closePopup" class="close-btn">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+</div>
+
+<div id="loader"><div class="loader"></div></div>
+<div id="main-body" class="main-content">
+  <div id="shopList"></div>
+  <div id="itemList"></div>
+  <div id="reviewSection">
+    <h2 class="category-title">Customer Reviews</h2>
+    <div class="review-slider" id="reviewSlider"></div>
+  </div>
+  <footer id="addressFooter"></footer>
+</div>
+<div class="mobfooter">
+  <a href="#" class="cart active" style="color: #008000;">
+    <i class="fa-solid fa-house"></i>
+  </a>
+  <a href="search" class="cart">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </a>
+  <a href="cart" class="cart">
+    <i class="fa-solid fa-cart-shopping"></i>
+  </a>
+  <a href="orders" class="cart">
+    <i class="fa-solid fa-truck-fast"></i>
+  </a>
+</div>
+
+<script>
+  let deferredPrompt;
+  let isAppInstalled = false;
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    checkInstallStatus();
+  });
+
+  window.addEventListener('appinstalled', () => {
+    isAppInstalled = true;
+    hideInstallPopup();
+  });
+
+  function checkInstallStatus() {
+    if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+      isAppInstalled = true;
+      return;
+    }
+
+    if (!isAppInstalled && deferredPrompt) {
+      showInstallPopup();
+    }
+  }
+
+  function showInstallPopup() {
+    const popup = document.getElementById('installPopup');
+    const mainContent = document.getElementById('main-body');
+    popup.classList.add('show');
+    mainContent.classList.add('with-popup');
+  }
+
+  function hideInstallPopup() {
+    const popup = document.getElementById('installPopup');
+    const mainContent = document.getElementById('main-body');
+    popup.classList.remove('show');
+    mainContent.classList.remove('with-popup');
+  }
+
+  document.getElementById('installBtn').addEventListener('click', async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        isAppInstalled = true;
+      }
+      deferredPrompt = null;
+      hideInstallPopup();
+    }
+  });
+
+  document.getElementById('closePopup').addEventListener('click', () => {
+    hideInstallPopup();
+  });
+
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js')
+        .then((registration) => {
+          console.log('SW registered: ', registration);
+        })
+        .catch((registrationError) => {
+          console.log('SW registration failed: ', registrationError);
+        });
+    });
+  }
+
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbzRO0QKhduZwADeE05ehtsEXdWRlvQ9b92WqMJcPCDrWjZ1EmhJqg8jof76KFOsg8x4AQ/exec';
+  const e_local = localStorage.getItem("e_local");
+  let userLikes = [];
+  let userCart = [];
+  let reviewIndex = 0;
+  let reviews = [];
+
+  fetch(scriptURL + '?get=user')
+    .then(r => r.json())
+    .then(users => {
+      const user = users.find(u => u.e_local === e_local);
+      if (user) {
+        userLikes = user.likes ? user.likes.split(",") : [];
+        userCart = user.cart ? user.cart.split(",") : [];
+      }
+
+      fetch(scriptURL)
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById("loader").style.display = "none";
+          document.getElementById("main-body").style.display = "block";
+
+          const itemList = document.getElementById("itemList");
+          const shopList = document.getElementById("shopList");
+          const addressFooter = document.getElementById("addressFooter");
+
+          const categories = {};
+          data.items.forEach(item => {
+            if (!categories[item.category]) categories[item.category] = [];
+            categories[item.category].push(item);
+          });
+
+          for (const [cat, items] of Object.entries(categories)) {
+            const section = document.createElement("div");
+            section.innerHTML = `<div class="category-title">${cat}</div>`;
+            const row = document.createElement("div");
+            row.className = "card-row";
+
+            items.forEach(item => {
+              const card = document.createElement("div");
+              card.className = "card";
+              const price = parseFloat(item.price);
+              const discount = parseFloat(item.discount);
+              const finalPrice = price - (price * discount / 100);
+
+              const likeBtn = document.createElement("button");
+              likeBtn.className = "btn like";
+              likeBtn.innerHTML = userLikes.includes(item.id) ?
+                `<i class="fa-solid fa-heart"></i>` :
+                `<i class="fa-regular fa-heart"></i>`;
+              likeBtn.setAttribute("data-id", item.id);
+
+              const cartBtn = document.createElement("button");
+              cartBtn.className = "btn cart";
+              cartBtn.innerHTML = `<i class="fa-solid fa-cart-plus"></i>`;
+              cartBtn.setAttribute("data-id", item.id);
+
+              card.innerHTML = `
+                <img src="${item.icon}">
+                <h4>${item.name}</h4>
+                <p><del>₹${price.toFixed(2)}</del> <strong>₹${finalPrice.toFixed(2)}</strong></p>
+              `;
+
+              const disCartDiv = document.createElement("div");
+              disCartDiv.className = "dis-cart";
+              const discountTag = document.createElement("p");
+              discountTag.className = "discount";
+              discountTag.innerText = `${discount}% OFF`;
+              disCartDiv.appendChild(discountTag);
+              disCartDiv.appendChild(cartBtn);
+              card.appendChild(disCartDiv);
+
+              const btnGroup = document.createElement("div");
+              btnGroup.className = "btn-group";
+              btnGroup.appendChild(likeBtn);
+              card.appendChild(btnGroup);
+
+              card.addEventListener("click", function (e) {
+                if (!e.target.closest(".btn")) {
+                  localStorage.setItem("productid", item.id);
+                  window.location.href = "detail";
+                }
+              });
+
+              row.appendChild(card);
+            });
+
+            section.appendChild(row);
+            itemList.appendChild(section);
+          }
+
+          data.shops.forEach(shop => {
+            const whatsappLink = `https://wa.me/91${shop.phone}?text=${encodeURIComponent(shop.message)}`;
+            const div = document.createElement("div");
+            div.className = "headmaster";
+            div.innerHTML = `
+            <div class="shop-info" onclick="reload()">
+              <img src="${shop.icon}">
+              <h2 class="shop-title">${shop.name}</h2>
+            </div>
+            <div class="desk-links">
+              <a href="cart"><i class="fa-solid fa-cart-shopping"></i></a>
+              <a href="orders"><i class="fa-solid fa-truck-fast"></i></a>
+              <a href="search"><i class="fa-solid fa-magnifying-glass"></i></a>
+            </div>
+              <a href="search" class="search"><i class="fa-solid fa-magnifying-glass"></i></a>
+              <a href="${whatsappLink}" target="_blank" class="whatsapp">
+                <i class="fa-brands fa-whatsapp"></i>
+              </a>
+            `;
+            shopList.appendChild(div);
+            addressFooter.innerText = shop.address;
+
+            const popup = document.getElementById('installPopup');
+            const popupIcon = popup.querySelector('.install-popup-icon');
+            const popupTitle = popup.querySelector('.install-popup-title');
+            
+            popupIcon.innerHTML = `<img src="${shop.icon}" style="width: 24px; height: 24px; border-radius: 4px;">`;
+            popupTitle.textContent = `Install ${shop.name}`;
+          });
+
+          reviews = data.reviews || [];
+          const reviewSlider = document.getElementById("reviewSlider");
+
+          const prevBtn = document.createElement("button");
+          prevBtn.innerHTML = '<i class="fa-classic fa-solid fa-left-long fa-fw"></i>';
+          prevBtn.id = "prevReview";
+          const nextBtn = document.createElement("button");
+          nextBtn.innerHTML = '<i class="fa-classic fa-solid fa-right-long fa-fw"></i>';
+          nextBtn.id = "nextReview";
+          const navWrapper = document.createElement("div");
+          navWrapper.className = "review-nav";
+          navWrapper.appendChild(prevBtn);
+          navWrapper.appendChild(nextBtn);
+          reviewSlider.parentElement.appendChild(navWrapper);
+
+          function showReview(index) {
+            reviewSlider.innerHTML = "";
+            if (reviews.length === 0) {
+              reviewSlider.parentElement.querySelector(".review-nav").style.display = "none";
+              return;
+            }
+
+            const r = reviews[index];
+            const card = document.createElement("div");
+            card.className = "review-card";
+            let stars = '';
+            const full = Math.floor(r.rating);
+            const half = r.rating % 1 >= 0.5;
+
+            for (let i = 0; i < full; i++) stars += '<i class="fa-solid fa-star star"></i>';
+            if (half) stars += '<i class="fa-solid fa-star-half-stroke star"></i>';
+
+            card.innerHTML = `
+              <h4>${r.customer}</h4>
+              <div>${stars}</div>
+              <p>${r.message}</p>
+            `;
+            reviewSlider.appendChild(card);
+
+            prevBtn.disabled = index === 0;
+            nextBtn.disabled = index === reviews.length - 1;
+          }
+
+          if (reviews.length > 0) {
+            showReview(reviewIndex);
+          } else {
+            navWrapper.style.display = "none";
+          }
+
+          prevBtn.addEventListener("click", () => {
+            if (reviewIndex > 0) {
+              reviewIndex--;
+              showReview(reviewIndex);
+            }
+          });
+
+          nextBtn.addEventListener("click", () => {
+            if (reviewIndex < reviews.length - 1) {
+              reviewIndex++;
+              showReview(reviewIndex);
+            }
+          });
+
+          setTimeout(checkInstallStatus, 3000);
+        });
+    });
+
+  document.addEventListener("click", function (e) {
+    const target = e.target.closest(".btn");
+    if (target && (target.classList.contains("like") || target.classList.contains("cart"))) {
+      e.stopPropagation();
+      if (!e_local) return window.location.href = "login";
+      document.getElementById("loader").style.display = "flex";
+
+      const productid = target.getAttribute("data-id");
+      const type = target.classList.contains("like") ? "like" : "cart";
+      const isLiked = userLikes.includes(productid);
+      const isAdd = type === "like" && !isLiked;
+
+      fetch(scriptURL, {
+        method: "POST",
+        body: new URLSearchParams({
+          e_local: e_local,
+          productid: productid,
+          type: type,
+          mode: isAdd ? "add" : "remove"
+        })
+      }).then(res => res.text()).then(() => {
+        if (type === "like") {
+          const icon = target.querySelector("i");
+          if (isAdd) {
+            icon.classList.remove("fa-regular");
+            icon.classList.add("fa-solid");
+            userLikes.push(productid);
+          } else {
+            icon.classList.remove("fa-solid");
+            icon.classList.add("fa-regular");
+            userLikes = userLikes.filter(id => id !== productid);
+          }
+        }
+        document.getElementById("loader").style.display = "none";
+      });
+    }
+  });
+</script>
+<script src="back.js"></script>

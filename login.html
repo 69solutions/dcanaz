@@ -1,0 +1,110 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="loader.css">
+<style>
+  #loginForm > h2 {
+    text-transform: uppercase;
+  }
+  #loginForm > span {
+    font-size: 18px;
+    font-weight: 400;
+  }
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .dont > span {
+    font-size: 17px;
+  }
+  .dont > span > a {
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #073042;
+  }
+  @media only screen and (max-width: 600px){
+    .header{
+      background: #073042;
+    }
+    #loginForm {
+      border-radius: 25px;
+      margin: -30px 0 0 0;
+      background: #fff;
+      padding: 30px 20px 20px 20px;
+    }
+  }
+  @media only screen and (min-width: 600px){
+    body {
+      margin: 10px 25%;
+      background: #073042;
+    }
+    .header > img {
+      padding: 10px 0 35px 0;
+    }
+    #loginForm { 
+      background: #fff;
+      padding: 18px 25px 15px 25px;
+      border-radius: 25px;
+    }
+    #loader {
+      width: 50%;
+    }
+  }
+</style>
+<div id="loader" style="display:none;">
+  <div class="loader"></div>
+</div>
+<div class="header">
+  <img src="https://i.ibb.co/qYVKy5wJ/login.webp">
+</div>
+<form id="loginForm">
+  <h2>Login</h2>
+  <span>for explore the marketplace.</span>
+  <input type="text" id="input" placeholder="Email or Phone" required class="int">
+  <input type="password" id="password" placeholder="Password" required class="int">
+  <button type="submit" class="btn">Login</button>
+  <div class="dont">
+    <span>Don't have account? <a href="signup">Signup</a></span>
+  </div>
+</form>
+<p id="response"></p>
+
+<script>
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbzb33RR8ZsFQ6aqSegi0r-ZYsEhYTGHThVVhCQWXyeutQs5JmUxS7YryW8tr--puRYr/exec';
+
+  if (localStorage.getItem("e_local")) {
+    window.location.href = "index";
+  }
+
+  document.getElementById("loginForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    document.getElementById("loader").style.display = "flex";
+
+    const input = document.getElementById("input").value.trim();
+    const password = document.getElementById("password").value;
+
+    const formData = new FormData();
+    formData.append("input", input);
+    formData.append("password", password);
+
+    fetch(scriptURL, {
+      method: "POST",
+      body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+      if (data !== "error") {
+        localStorage.setItem("e_local", data);
+        window.location.href = "index";
+      } else {
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("response").textContent = "Invalid credentials.";
+      }
+    })
+    .catch(() => {
+      document.getElementById("loader").style.display = "none";
+      document.getElementById("response").textContent = "Error during login.";
+    });
+  });
+</script>
