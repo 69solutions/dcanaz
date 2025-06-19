@@ -379,7 +379,7 @@
 
 <script>
 const e_local = localStorage.getItem("e_local")
-if (!e_local) location.href = "index"
+if (!e_local) location.href = "login"
 
 let allItems = []
 fetch("https://script.google.com/macros/s/AKfycbwDLnZoY4CJRwcTG0BlMA9KssmlhBCcy_uBl9AO6mBG6fZURQIFmkcdOQMFE4kkrvH9mg/exec")
@@ -396,7 +396,7 @@ fetch("https://script.google.com/macros/s/AKfycbwDLnZoY4CJRwcTG0BlMA9KssmlhBCcy_
           <div class="empty-state-icon">🛍️</div>
           <h3>No orders yet</h3>
           <p>You haven't placed any orders. Start shopping to see your orders here!</p>
-          <a href="index" class="cta-button">Start Shopping</a>
+          <a href="home" class="cta-button">Start Shopping</a>
         </div>
       `
     } else {
