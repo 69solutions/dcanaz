@@ -96,7 +96,7 @@
     .then(data => {
       if (data !== "error") {
         localStorage.setItem("e_local", data);
-        window.location.href = "index";
+        window.location.href = "home";
       } else {
         document.getElementById("loader").style.display = "none";
         document.getElementById("response").textContent = "Invalid credentials.";
