@@ -516,7 +516,7 @@
 <script>
 const id = localStorage.getItem("productid")
 const e_local = localStorage.getItem("e_local")
-if (!id || !e_local) location.href = "index"
+if (!id || !e_local) location.href = "login"
 let items = []
 let selectedCategory = ""
 let currentImageIndex = 0
@@ -527,7 +527,7 @@ fetch("https://script.google.com/macros/s/AKfycbyGw53tcOHvrKhi4QMx9q0tPr84BAW-dK
   .then(d => {
     items = d.items
     const item = items.find(x => x.id === id)
-    if (!item) return location.href = "index"
+    if (!item) return location.href = "home"
     selectedCategory = item.category
     const discount = parseInt(item.discount)
     const price = parseFloat(item.price)
